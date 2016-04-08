@@ -8,7 +8,6 @@ gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'omniauth'
-gem 'pg'
 gem 'private_pub'
 gem 'rails', '4.2.0'
 gem 'sass-rails', '~> 5.0'
@@ -30,6 +29,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'spring'
   gem 'web-console', '~> 2.0'
+  gem 'sqlite3'
 end
 
 group :test do
@@ -37,6 +37,8 @@ group :test do
 end
 
 group :production do
+
+  gem 'pg'
   gem 'google-analytics-rails'
   gem 'rails_12factor'
 end

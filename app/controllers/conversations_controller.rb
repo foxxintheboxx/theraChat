@@ -18,6 +18,7 @@ class ConversationsController < ApplicationController
   end
 
   def show
+    @users = User.all
     @conversation = Conversation.find(params[:id])
     @reciever = interlocutor(@conversation)
     @messages = @conversation.messages
