@@ -2,7 +2,7 @@
   <div class="chatboxhead">
     <div class="chatboxtitle">
       <i class="fa fa-comments"></i>
-   
+
       <h1><%= @reciever.name %> </h1>
     </div>
     <div class="chatboxoptions">
@@ -19,14 +19,13 @@
   </div>
   <div class="chatboxinput">
     <%= form_for([@conversation, @message], :remote => true, :html => {id: "conversation_form_#{@conversation.id}"}) do |f| %>
-        <%= f.text_area :body, class: "chatboxtextarea", "data-cid" => @conversation.id %>
+        <%= f.text_field :body, class: "chatboxtextarea", "data-cid" => @conversation.id %>
         <div class="chat-form-btns">
         <%= f.submit "send", class: "btn btn-primary btn-sm btn-submit"%>
-        <%= f.submit "New Title!", class: "btn btn-success btn-sm btn-new-title"%>
         </div>
 
     <% end %>
-    
+
   </div>
 </div>
 <div class="col col-md-4 col-md-offset-4">
@@ -48,5 +47,5 @@
 </table>
 </div>
 
- 
+
 <%= subscribe_to conversation_path(@conversation) %>

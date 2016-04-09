@@ -26,4 +26,18 @@ class User < ActiveRecord::Base
     end
     user
   end
+
+
+  def admin?
+    false
+  end
+
+  def volunteer?
+    false
+  end
+
+  def survivor?
+    true
+  end
+
 end
