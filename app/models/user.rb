@@ -1,12 +1,12 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:google_oauth2]
-
-  has_many :conversations, foreign_key: :sender_id
-
+         :recoverable, :rememberable, :trackable, :validatable
+  belongs_to :role
+  has_many :conversations, :dependent => :destroy, foreign_key: :sender_id
+  validates_presence_of :name
+  validates_confirmation_of :password
+  before_save :assign_role
+  
   # after_create :add_avatar
 
   # def add_avatar
@@ -14,30 +14,37 @@ class User < ActiveRecord::Base
   #   self.save
   # end
 
-  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    user = User.where(:email => data["email"]).first
-
-    unless user
-        user = User.create(name: data["name"],
-           email: data["email"],
-           password: Devise.friendly_token[0,20]
-        )
-    end
-    user
+  def assign_role
+    self.role = Role.find_by name: "Survivor" if self.role.nil?
+  end
+  
+  def self.new_survivor
+    rand = (0...8).map { (30 + rand(26)).chr }.join 
+    user = User.create(:name => "anon", :role_id => User.get_role("Survivor").id, :email => rand, :password => rand, :password_confirmation => rand)
+    return user
+  end
+  
+  def self.admin_make_user(args)
+    role = User.get_role(args[:role_id])
+    return User.create!(:name => args[:name], :role_id => role.id, :email => args[:email], :password => args[:password], :password_confirmation => args[:password_confirmation])
   end
 
+  def self.get_role(name)
+    Role.where(:name => name).first
+  end
+
+  def generate_conversation
+    self.conversation = Conversation.create!() if (survivor? or admin?)
+    return self.conversation
+  end
 
   def admin?
-    false
+    self.role.name == "Admin"
   end
-
   def volunteer?
-    false
+    self.role.name == "Volunteer"
   end
-
   def survivor?
-    true
+    self.role.name == "Survivor"
   end
-
 end

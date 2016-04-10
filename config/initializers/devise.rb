@@ -4,7 +4,9 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = '7b07c9d123d766e3f64db47e7377ef87998cc91ecd4b4d908891883cc7707866e9030074827973bb6f0df53555e0a6692ce19c35455dff37140f336abf06a9a5'
+  # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
+  # by default. You can change it below and use your own secret key.
+  # config.secret_key = '3ec8c6a2c239540cb8ffae1ad9e6025062d736598212adc2b2345157fa7fe538859bd8014169835fed7fb226cbead10893afd6dd6e8dbe0b7d1a4349b789e3df'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -29,7 +31,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [ :email ]
+  # config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -41,12 +43,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [:email]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :email ]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -97,7 +99,10 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = 'ffde4821d4ce04e4ab413038600c22ae5ab87c231279bd4527d0f9ac52e88fcecd85201e6352af9603e2dc3b4d14d88d80e7d73dfcab9a092bdf39dec2c51ef0'
+  # config.pepper = '2f415b1099e051a21efc7078cbdf85528b471ffabbd114ab3cabb2e9b4d532918497fbaef1fcd07844af7a1775192d5fa6091eb1b80ade53f4d98166ef3fd996'
+
+  # Send a notification email when the user's password is changed
+  # config.send_password_change_notification = false
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -122,7 +127,7 @@ Devise.setup do |config|
   config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
-  # config.confirmation_keys = [ :email ]
+  # config.confirmation_keys = [:email]
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
@@ -140,7 +145,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 8..128
+  config.password_length = 8..72
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
@@ -152,9 +157,6 @@ Devise.setup do |config|
   # time the user will be asked for credentials again. Default is 30 minutes.
   # config.timeout_in = 30.minutes
 
-  # If true, expires auth token on session timeout.
-  # config.expire_auth_token_on_timeout = false
-
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
@@ -162,7 +164,7 @@ Devise.setup do |config|
   # config.lock_strategy = :failed_attempts
 
   # Defines which key will be used when locking and unlocking an account
-  # config.unlock_keys = [ :email ]
+  # config.unlock_keys = [:email]
 
   # Defines which strategy will be used to unlock an account.
   # :email = Sends an unlock link to the user email
@@ -184,12 +186,16 @@ Devise.setup do |config|
   # ==> Configuration for :recoverable
   #
   # Defines which key will be used when recovering the password for an account
-  # config.reset_password_keys = [ :email ]
+  # config.reset_password_keys = [:email]
 
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
   config.reset_password_within = 6.hours
+
+  # When set to false, does not sign a user in automatically after their password is
+  # reset. Defaults to true, so a user is signed in automatically after a reset.
+  # config.sign_in_after_reset_password = true
 
   # ==> Configuration for :encryptable
   # Allow you to use another encryption algorithm besides bcrypt (default). You can use
@@ -227,7 +233,8 @@ Devise.setup do |config|
   # config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  config.sign_out_via = :delete
+  config.sign_out_via = :delete ## FUTURE FIX ! should be deleger
+
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
@@ -253,16 +260,7 @@ Devise.setup do |config|
   # The router that invoked `devise_for`, in the example above, would be:
   # config.router_name = :my_engine
   #
-  # When using omniauth, Devise cannot automatically set Omniauth path,
+  # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  require "omniauth-google-oauth2"
-  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], {access_type: "offline", approval_prompt: "" }
-
-
-
-
-
-
-
 end

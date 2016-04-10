@@ -1,39 +1,46 @@
 source 'https://rubygems.org'
 
-gem 'omniauth-google-oauth2'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'devise'
 gem 'faker'
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
-gem 'omniauth'
 gem 'private_pub'
 gem 'rails', '4.2.0'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'thin'
 gem 'uglifier', '>= 1.3.0'
+gem 'codeclimate-test-reporter', group: :test, require: nil
+gem 'cancancan', '~> 1.10'
 
 group :development, :test do
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'sqlite3'
   gem 'byebug'
-  gem 'capybara'
   gem 'database_cleaner'
+  gem 'capybara', '2.4.4'
+  gem 'launchy'
+  gem 'rspec-rails'
+  gem 'ZenTest', '4.11.0'
+  gem 'cucumber'
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels'
+  gem 'better_errors'
   gem 'factory_girl_rails'
+  gem 'ffaker'
+  gem 'simplecov', :require => false
+  gem 'autotest-rails'
+  gem 'metric_fu'
+  gem 'rspec-activemodel-mocks'
   gem 'guard-rspec', require: false
   gem 'pry'
-  gem 'rspec-rails'
   gem 'selenium-webdriver'
-  gem 'simplecov'
-  gem 'spring'
-  gem 'web-console', '~> 2.0'
-  gem 'sqlite3'
 end
 
-group :test do
-  gem 'shoulda-matchers'
+group :development do
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
 end
 
 group :production do
