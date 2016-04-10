@@ -9,9 +9,12 @@ class ConversationDecorator
   def convos
     @convos ||= User.all.map { |user| Conversation.between(current_user, user) }
       .flatten
+    puts("convos method")
+    @convos
   end
 
   def updated?
-    convos.select { |convo| convo.new_messages? }.any?
+    puts("hello")
+    convos().select { |convo| convo.new_messages? }.any?
   end
 end

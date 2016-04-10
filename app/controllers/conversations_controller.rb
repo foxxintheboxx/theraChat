@@ -1,38 +1,19 @@
 class ConversationsController < ApplicationController
   before_filter :authenticate_user!
-
+  load_and_authorize_resource
   # layout false
 
   def index
-#    @decorated_conversation = ConversationDecorator.new(current_user) add avatar if you want
-#
-#    if current_user.admin?
-#      redirect_to(user/admin page)
-#      this page has problematic conversation
-#      also list volunteers/admins ( link to /admin/edit/user/:id )
-#      and add also other volunteer
-#    elsif current_user.volunteer?
-#       route to conversations/volunteer ( volunteer waiting page )
-#       have additional
-#    elseif current_user.survivor?
-#     load balance volunteers and assign if possible
-#     volunteer = find available User that are online and have volunteer role status.
-#     volunteer is always the recipient
-#     if none
-#      redirect to page saying no available volunteers
-#     else
-#      redirect_to(conversations_path(:sender_id => current_user.id, :recipient_id => user.id)
-#      you
-#    end
+    @decorated_conversation = ConversationDecorator.new(current_user)
+    @users = User.all
   end
 
   def create
-    if Conversation.between(params[:sender_id],params[:recipient_id]).present?
-      @conversation = Conversation.between(params[:sender_id],params[:recipient_id]).first
+    if current_user.survivor?
+      @conversation = Conversation.get_conversation_survivor(params[:sender_id],params[:recipient_id])
     else
-      @conversation = Conversation.create!(conversation_params)
+      @conversation = Conversation.get_conversation(params[:sender_id],params[:recipient_id])
     end
-
     redirect_to conversation_path(@conversation)
   end
 

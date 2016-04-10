@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20160317045953) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.string   "avatar"
-    t.datetime "last_seen",              default: '2016-04-10 01:49:54'
+    t.datetime "last_seen",              default: '2016-04-10 04:01:07'
     t.boolean  "online?",                default: false
     t.string   "status"
   end

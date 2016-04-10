@@ -3,8 +3,7 @@ Rails.application.routes.draw do
  # devise_for :users, controllers: { sessions: "users/sessions" }
 
   authenticated :user do
-    root 'users#games'
-    get 'games' => 'users#games'
+    root 'users#index'
   end
 
   unauthenticated :user do

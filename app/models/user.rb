@@ -24,6 +24,12 @@ class User < ActiveRecord::Base
     return user
   end
   
+  def self.find_available_volunteer
+    volunteer_role = User.get_role("Volunteer")
+    return User.where(:role_id => volunteer_role.id).sample
+  end
+
+
   def self.admin_make_user(args)
     role = User.get_role(args[:role_id])
     return User.create!(:name => args[:name], :role_id => role.id, :email => args[:email], :password => args[:password], :password_confirmation => args[:password_confirmation])

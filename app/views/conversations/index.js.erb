@@ -1,4 +1,4 @@
-<% if @decorated_conversation.updated? %>
+<% if @decorated_conversation and @decorated_conversation.updated? %>
   <% @decorated_conversation.convos.each do |convo| %>
       var id = <%= convo.sender_id %>
       $('#new-messages-'+ id).html("<div class='blink'></div>");
